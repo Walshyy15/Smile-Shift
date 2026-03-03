@@ -16,11 +16,11 @@ Dental staffing is broken:
 
 - **For Offices**: A hygienist calls out sick at 6 AM. The office scrambles — calling agencies, posting on apps, texting colleagues. The chair sits empty for hours. Revenue lost: $800–$1,500/day per chair.
 - **For Hygienists**: Navigating clunky apps with hidden fees, no transparency about offices, delayed payments, and break-time disputes. Applying to shifts only to never hear back.
-- **For Everyone**: Existing platforms charge service fees (15–30%), have poor UX, lack transparency, and don't leverage AI for intelligent matching.
+- **For Everyone**: Existing platforms charge service fees (15–30%), have poor UX, lack transparency, and don't use smart matching.
 
 ### The Solution
 
-SmileShift is a **zero-cost, AI-powered dental staffing marketplace** that:
+SmileShift is a **zero-cost, smart-matching dental staffing marketplace** that:
 
 1. **Matches instantly** — Post a shift, get matched in < 30 seconds
 2. **Eliminates fees** — Offices pay hygienists directly; the platform is free
@@ -85,7 +85,7 @@ SmileShift is a **zero-cost, AI-powered dental staffing marketplace** that:
 ### Our Moat (Competitive Advantages)
 
 1. **Free forever** — Network effects compound; the bigger we get, the more valuable
-2. **AI-first matching** — Gets smarter with every shift, learns preferences
+2. **Smart matching** — SQL-powered scoring gets better with more data, no paid APIs needed
 3. **Mobile-first PWA** — No app store friction, instant updates
 4. **Two-way transparency** — Both sides see reviews before committing
 5. **Speed** — Sub-30-second matching vs. minutes/hours on competitors
@@ -119,7 +119,7 @@ SmileShift is a **zero-cost, AI-powered dental staffing marketplace** that:
 | Multi-day shift booking | P0 | Common use case |
 | Favorites & preferred lists | P0 | Retention driver |
 | Multi-location dashboard | P0 | Enterprise attraction |
-| AI demand forecasting | P1 | Predictive staffing |
+| SQL demand forecasting | P1 | Predictive staffing (no AI API needed) |
 | Automated credential renewal alerts | P1 | Compliance automation |
 | Referral program | P1 | Growth engine |
 | Calendar sync (Google, iCal) | P1 | Convenience |
@@ -131,7 +131,7 @@ SmileShift is a **zero-cost, AI-powered dental staffing marketplace** that:
 |---------|----------|-----------|
 | Dental assistants support | P0 | Market expansion |
 | Front office staff support | P1 | Full staffing solution |
-| AI auto-scheduling | P1 | Proactive shift filling |
+| Auto-scheduling (SQL-based) | P1 | Proactive shift filling |
 | Analytics dashboard for offices | P1 | Value-add for retention |
 | Compliance center (state-by-state) | P0 | Multi-state operation |
 | Public API | P2 | Integration with PMS |
@@ -191,6 +191,6 @@ The core marketplace is **permanently free**. Revenue comes from optional premiu
 
 1. **Network effects**: Every user makes the platform more valuable for everyone else
 2. **Zero-friction adoption**: Removes the #1 barrier to switching from competitors
-3. **Data advantage**: More usage → better AI → better matching → more usage
+3. **Data advantage**: More usage → better matching scores → better experience → more usage
 4. **Ecosystem lock-in**: Once integrated with workflows, switching costs increase naturally
 5. **Proven model**: LinkedIn (free core, premium features), Uber (subsidized growth), Stripe (processing fees)

@@ -104,13 +104,35 @@ SmileShift uses a **serverless-first, edge-deployed architecture** optimized for
 4. **SvelteKit adapter**: First-class support via `@sveltejs/adapter-vercel`
 5. **Analytics**: Built-in Web Vitals monitoring
 
-### Caching: Upstash Redis
+### Maps: Leaflet + OpenStreetMap (100% Free)
 
-**Why Upstash:**
+**Why Leaflet + OSM over Google Maps / Mapbox:**
 
-1. **Serverless Redis**: Pay-per-request, no idle costs
-2. **Edge-compatible**: Works in edge runtime (unlike traditional Redis)
-3. **Use cases**: Geo-queries, session caching, rate limiting, real-time leaderboards
+1. **Zero cost**: No API key needed, no usage limits, no billing
+2. **Open source**: Both Leaflet.js and OpenStreetMap data are fully open
+3. **Lightweight**: Leaflet is only 42KB — perfect for mobile-first
+4. **Geocoding**: Nominatim (free OSM geocoder) for address → coordinates
+5. **Reverse geocoding**: Free via Nominatim — no API key required
+6. **PostGIS**: All distance calculations happen in PostgreSQL (free, blazing fast)
+
+### AI & Matching: Pure PostgreSQL (No External AI APIs)
+
+**Why no OpenAI / paid AI:**
+
+1. **Matching engine**: 100% SQL — weighted scoring with PostGIS distance, reliability, reviews
+2. **Geo-proximity**: PostGIS `ST_DWithin` and `ST_Distance` — faster than any API call
+3. **Full-text search**: PostgreSQL `pg_trgm` extension for fuzzy search
+4. **Future AI (if desired)**: Ollama (free, runs locally) or Hugging Face (free inference tier)
+5. **No latency**: SQL matching runs in <50ms vs 500ms+ for external API calls
+
+### Caching: Upstash Redis (Optional — Only at Scale)
+
+**Only needed at 10K+ users:**
+
+1. **Serverless Redis**: Pay-per-request, no idle costs. FREE tier: 10K commands/day
+2. **Edge-compatible**: Works in edge runtime
+3. **Use cases**: Rate limiting, session caching (when needed)
+4. **Not required for MVP**: Supabase handles everything at small scale
 
 ---
 
@@ -255,7 +277,7 @@ The core algorithm that connects shifts with hygienists:
 │             ├── Full test suite                          │
 │             ├── Supabase migration                       │
 │             ├── Deploy to Production (Vercel)            │
-│             └── Sentry release                           │
+│             └── Vercel Analytics checkpoint               │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -263,10 +285,10 @@ The core algorithm that connects shifts with hygienists:
 
 | Users | Infrastructure | Cost/Month |
 |-------|---------------|------------|
-| 0–1K | Supabase Free + Vercel Free | $0 |
-| 1K–10K | Supabase Pro ($25) + Vercel Pro ($20) | ~$50 |
-| 10K–50K | Supabase Pro + Vercel Pro + Upstash ($10) | ~$80 |
-| 50K–100K | Supabase Team + Vercel Enterprise + dedicated Redis | ~$500 |
+| 0–1K | Supabase Free + Vercel Free + Leaflet/OSM | **$0** |
+| 1K–10K | Supabase Pro ($25) + Vercel Pro ($20) | **~$45** |
+| 10K–50K | Supabase Pro + Vercel Pro + Upstash Free | **~$50** |
+| 50K–100K | Supabase Team + Vercel Pro + Upstash Pro ($10) | **~$300** |
 | 100K+ | Self-hosted Supabase + dedicated infra | Custom |
 
 ### Security Architecture
@@ -278,7 +300,7 @@ The core algorithm that connects shifts with hygienists:
 │  Layer 1: Network                            │
 │  ├─ HTTPS everywhere (TLS 1.3)              │
 │  ├─ DDoS protection (Vercel/Cloudflare)     │
-│  └─ Rate limiting (Upstash)                 │
+│  └─ Rate limiting (in-memory / Upstash)     │
 │                                              │
 │  Layer 2: Authentication                     │
 │  ├─ Supabase Auth (JWT)                     │
@@ -297,32 +319,36 @@ The core algorithm that connects shifts with hygienists:
 │  ├─ PII segregation                         │
 │  └─ HIPAA-aware data handling               │
 │                                              │
-│  Layer 5: Monitoring                         │
-│  ├─ Sentry error tracking                   │
-│  ├─ Audit logging                           │
-│  └─ Anomaly detection                       │
+│  Layer 5: Monitoring (All Free)              │
+│  ├─ Vercel Analytics (built-in, free)       │
+│  ├─ Audit logging (Supabase)                │
+│  └─ Sentry (optional, free 5K errors/mo)    │
 └──────────────────────────────────────────────┘
 ```
 
 ---
 
-## AI & Automation Opportunities
+## AI & Automation (Zero-Cost Approach)
 
-### Phase 1 (MVP)
-- **Smart Matching**: Score-based algorithm using distance, reliability, and preferences
-- **Auto-verification**: License number lookup against state dental board APIs
-- **Smart Notifications**: Only notify hygienists about relevant shifts
+All "smart" features use **pure PostgreSQL** — no paid AI APIs needed.
 
-### Phase 2 (Growth)
-- **Demand Forecasting**: Predict staffing needs based on historical patterns, season, day of week
-- **Rate Optimization**: Suggest optimal hourly rates based on market data
-- **Churn Prediction**: Identify at-risk users and trigger retention campaigns
+### Phase 1 (MVP) — Free
+- **Smart Matching**: PostgreSQL scoring function (distance × reliability × reviews × rate)
+- **Geo-proximity search**: PostGIS `ST_DWithin` — finds hygienists within commute radius
+- **Smart Notifications**: SQL query filters — only notify relevant hygienists
+- **Auto-calculated totals**: Generated columns for hours/pay math
 
-### Phase 3 (Scale)
-- **AI Auto-Scheduling**: Proactively fill schedules before offices even post
-- **NLP Chat**: Natural language shift posting ("I need a hygienist Tuesday morning")
-- **Computer Vision**: Auto-extract license info from photos
-- **Sentiment Analysis**: Monitor review quality and flag issues
+### Phase 2 (Growth) — Still Free
+- **Demand Forecasting**: SQL aggregate queries on historical shift data (day of week, season)
+- **Rate Optimization**: SQL AVG/percentile on market rates by area — suggest competitive pricing
+- **Fuzzy Search**: `pg_trgm` extension for typo-tolerant search (built into PostgreSQL)
+- **Auto-expiry**: Supabase cron (pg_cron) to auto-expire old applications/shifts
+
+### Phase 3 (Scale) — Optional, Low/No Cost
+- **Ollama** (free, local): Run open-source LLMs locally for NLP features
+- **Hugging Face** (free tier): Free inference API for sentiment analysis
+- **Supabase Edge Functions**: Lightweight automation without external services
+- **PostgreSQL ML** (pg_ml): Machine learning directly in the database (experimental)
 
 ---
 

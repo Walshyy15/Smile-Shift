@@ -19,18 +19,20 @@ SmileShift connects dental offices with qualified hygienists and assistants in s
 
 ## 🏗️ Tech Stack
 
-| Layer | Technology | Why |
-|-------|-----------|-----|
-| Frontend | **SvelteKit** + TypeScript | Smallest bundle, fastest load, mobile-first |
-| Mobile | **PWA** (Progressive Web App) | Install-free, works offline, push notifications |
-| Backend | **Supabase** (PostgreSQL + Auth + Realtime) | Free tier, real-time subscriptions, row-level security |
-| API Layer | **SvelteKit API Routes** + **Edge Functions** | Co-located with frontend, edge-deployed |
-| Payments | **Stripe Connect** | Direct office→hygienist payments, no middleman |
-| Maps/Geo | **Mapbox** or **Google Maps** | Proximity matching, commute time estimates |
-| AI/ML | **OpenAI API** + custom models | Smart matching, demand forecasting |
-| Hosting | **Vercel** (Edge) | Global CDN, auto-scaling, generous free tier |
-| CI/CD | **GitHub Actions** | Automated testing, preview deploys, production releases |
-| Monitoring | **Sentry** + **Vercel Analytics** | Error tracking, performance monitoring |
+| Layer | Technology | Cost | Why |
+|-------|-----------|------|-----|
+| Frontend | **SvelteKit** + TypeScript | ✅ Free | Smallest bundle, fastest load, mobile-first |
+| Mobile | **PWA** (Progressive Web App) | ✅ Free | Install-free, works offline, push notifications |
+| Backend | **Supabase** (PostgreSQL + Auth + Realtime) | ✅ Free | 500MB DB, 50K MAU, real-time, row-level security |
+| API Layer | **SvelteKit API Routes** + **Edge Functions** | ✅ Free | Co-located with frontend, edge-deployed |
+| Payments | **Stripe Connect** | ✅ Free* | Direct payments, no middleman (*standard processing fee only) |
+| Maps/Geo | **Leaflet** + **OpenStreetMap** | ✅ Free | No API key needed, 42KB, open source |
+| Matching | **PostgreSQL + PostGIS** | ✅ Free | Pure SQL scoring, geo-proximity, zero latency |
+| Hosting | **Vercel** (Edge) | ✅ Free | Global CDN, auto-scaling, generous free tier |
+| CI/CD | **GitHub Actions** | ✅ Free | Automated testing, preview deploys, production releases |
+| Monitoring | **Vercel Analytics** | ✅ Free | Built-in Web Vitals, error tracking |
+
+> **💡 Total cost to launch: $0.** No paid APIs required. The only fees are Stripe's standard 2.9% + $0.30 per transaction when real payments are processed.
 
 ## 🚀 Getting Started
 
